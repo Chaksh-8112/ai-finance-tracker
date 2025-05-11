@@ -1,0 +1,22 @@
+# Ignore environment files
+.env
+.env.local
+
+# Ignore uploaded bank statements
+bank_statements/
+ai-finance-tracker/Neo4j-29152eec-Created-2025-05-10.txt
+
+# Python cache and build files
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store

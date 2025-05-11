@@ -1,4 +1,6 @@
-# ai-finance-tracker
+<file name=0 path=/Users/chakshitashetty/Desktop/My_protfolio/Finance/ai-finance-tracker/README.md>
+
+###ai-finance-tracker
 ## Prerequisites
 
 - Python 3.7 or higher
@@ -77,3 +79,60 @@ Then restart the server.
 ## Verifying Uploads
 
 Uploaded files are saved under `bank_statements/` in the project root for inspection. Check your console logs for the saved path.
+
+<details>
+<summary>High-Level Architecture (click to expand)</summary>
+
+```mermaid
+flowchart TD
+  subgraph Client["Client Layer"]
+    A[User] -->|Upload Statements| B[FastAPI /upload]
+    A -->|Query Data| C[FastAPI /graph/*]
+    A -->|View Docs| D[Swagger UI /docs]
+  end
+
+  subgraph Processing["Processing Layer"]
+    B -->|PDF| E[PDF Parser\npdfplumber]
+    B -->|CSV/Excel| F[Data Parser\npandas]
+    E --> G[Transaction Extraction]
+    F --> G
+    G -->|Structured Data| H[Transaction Categorization]
+    H -->|Categorized Transactions| I[Neo4j Graph Model]
+  end
+
+  subgraph Database["Database Layer"]
+    I -->|Cypher Queries| J[Neo4j Driver]
+    J <-->|Bolt Protocol| K[Neo4j Database]
+    
+    subgraph GraphModel["Graph Data Model"]
+      N[Transaction]
+      O[Category]
+      P[Merchant]
+      Q[BatchUpload]
+      
+      N -->|BELONGS_TO| O
+      N -->|PAID_TO| P
+      Q -->|CONTAINS| N
+      N -->|SAME_DAY| N
+      O -->|SAME_CATEGORY| O
+    end
+  end
+
+  subgraph Analysis["Analysis Layer"]
+    C -->|Query Request| L[Graph Analytics]
+    L -->|Cypher Queries| J
+    L -->|Results| M[Insights & Visualization]
+    M --> A
+  end
+
+  classDef primary fill:#f9f,stroke:#333,stroke-width:2px;
+  classDef secondary fill:#bbf,stroke:#333,stroke-width:1px;
+  classDef tertiary fill:#ddf,stroke:#333,stroke-width:1px;
+  
+  class A,B,C,D primary;
+  class E,F,G,H,I secondary;
+  class J,K,L,M tertiary;> G
+  end
+```
+
+</details>

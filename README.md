@@ -1,6 +1,6 @@
 <file name=0 path=/Users/chakshitashetty/Desktop/My_protfolio/Finance/ai-finance-tracker/README.md>
 
-###ai-finance-tracker
+### AI FINANCE TRACKER
 ## Prerequisites
 
 - Python 3.7 or higher

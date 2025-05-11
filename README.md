@@ -131,8 +131,5 @@ flowchart TD
   
   class A,B,C,D primary;
   class E,F,G,H,I secondary;
-  class J,K,L,M tertiary;> G
-  end
+  class J,K,L,M tertiary;
 ```
-
-</details>

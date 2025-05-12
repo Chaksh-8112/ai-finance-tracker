@@ -4,91 +4,52 @@
 
 Financial Graph AI is an open-source project that transforms personal bank statements into intelligent, queryable financial insights using graph database architecture and modern AI capabilities.
 
-<div align="center">
-  <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" width="600">
-    <!-- Background -->
-    <rect width="800" height="600" fill="#f8f9fa" rx="10" ry="10"/>
+## System Architecture
+
+```mermaid
+flowchart TD
+    subgraph Input ["Data Ingestion"]
+        A[Bank Statements] --> B[CSV/Excel Parser]
+        A --> C[PDF OCR Parser]
+        B --> D[Data Normalizer]
+        C --> D
+    end
     
-    <!-- Title -->
-    <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">Financial Graph AI Architecture</text>
+    subgraph DB ["Graph Database"]
+        E[Transaction Nodes] --- F[Merchant Nodes]
+        E --- G[Category Nodes]
+        E --- H[Account Nodes]
+        F --- G
+    end
     
-    <!-- Data Ingestion Layer -->
-    <rect x="100" y="80" width="600" height="100" rx="8" ry="8" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
-    <text x="400" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0d47a1">Data Ingestion Layer</text>
+    subgraph AI ["AI Intelligence"]
+        I[LLM Categorization] --- J[Embedding Similarity]
+        J --- K[Natural Language Agent]
+    end
     
-    <rect x="140" y="130" width="120" height="40" rx="5" ry="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
-    <text x="200" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">CSV/Excel</text>
+    subgraph UI ["User Interface"]
+        L[Financial Dashboard] --- M[Transaction Search]
+        M --- N[Chat Interface]
+    end
     
-    <rect x="340" y="130" width="120" height="40" rx="5" ry="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
-    <text x="400" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">PDF Parser</text>
+    Input --> DB
+    DB --> AI
+    AI --> UI
     
-    <rect x="540" y="130" width="120" height="40" rx="5" ry="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
-    <text x="600" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Normalizer</text>
+    classDef blue fill:#e1f5fe,stroke:#03a9f4,stroke-width:2px;
+    classDef green fill:#e8f5e9,stroke:#4caf50,stroke-width:2px;
+    classDef orange fill:#fff3e0,stroke:#ff9800,stroke-width:2px;
+    classDef purple fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px;
     
-    <!-- Arrow -->
-    <path d="M400,180 L400,210" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-    
-    <!-- Graph Database Layer -->
-    <rect x="100" y="210" width="600" height="140" rx="8" ry="8" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
-    <text x="400" y="240" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#1b5e20">Graph Database Layer</text>
-    
-    <!-- Graph Nodes -->
-    <circle cx="200" cy="290" r="30" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
-    <text x="200" y="295" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Transaction</text>
-    
-    <circle cx="350" cy="290" r="30" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
-    <text x="350" y="295" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Merchant</text>
-    
-    <circle cx="500" cy="290" r="30" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
-    <text x="500" y="295" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Category</text>
-    
-    <circle cx="650" cy="290" r="30" fill="#c8e6c9" stroke="#388e3c" stroke-width="1.5"/>
-    <text x="650" y="295" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Account</text>
-    
-    <!-- Graph Relationships -->
-    <line x1="230" y1="290" x2="320" y2="290" stroke="#388e3c" stroke-width="1.5"/>
-    <text x="275" y="280" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">MADE_AT</text>
-    
-    <line x1="380" y1="290" x2="470" y2="290" stroke="#388e3c" stroke-width="1.5"/>
-    <text x="425" y="280" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">BELONGS_TO</text>
-    
-    <line x1="530" y1="290" x2="620" y2="290" stroke="#388e3c" stroke-width="1.5"/>
-    <text x="575" y="280" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#333">HAS_ACCOUNT</text>
-    
-    <!-- Arrow -->
-    <path d="M400,350 L400,380" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-    
-    <!-- AI Intelligence Layer -->
-    <rect x="100" y="380" width="600" height="100" rx="8" ry="8" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
-    <text x="400" y="410" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#e65100">AI Intelligence Layer</text>
-    
-    <rect x="140" y="430" width="180" height="40" rx="5" ry="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1"/>
-    <text x="230" y="455" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">LLM-Based Categorization</text>
-    
-    <rect x="480" y="430" width="180" height="40" rx="5" ry="5" fill="#ffe0b2" stroke="#f57c00" stroke-width="1"/>
-    <text x="570" y="455" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">NL Query Agent</text>
-    
-    <!-- Arrow -->
-    <path d="M400,480 L400,510" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-    
-    <!-- User Interface Layer -->
-    <rect x="100" y="510" width="600" height="70" rx="8" ry="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
-    <text x="400" y="545" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#4a148c">User Interface Layer</text>
-    
-    <text x="230" y="565" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Dashboard & Analytics</text>
-    <text x="570" y="565" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">Natural Language Interface</text>
-    
-    <!-- Arrowhead Marker -->
-    <defs>
-      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-        <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
-      </marker>
-    </defs>
-  </svg>
-</div>
+    class Input blue;
+    class DB green;
+    class AI orange;
+    class UI purple;
+```
 
 
 
+![Financial Graph AI](https://via.placeholder.com/800x400?text=Financial+Graph+AI)
 
 ## 🚀 Project Vision
 

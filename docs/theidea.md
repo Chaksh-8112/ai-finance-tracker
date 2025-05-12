@@ -49,8 +49,6 @@ flowchart TD
 
 
 
-![Financial Graph AI](https://via.placeholder.com/800x400?text=Financial+Graph+AI)
-
 ## 🚀 Project Vision
 
 Managing personal finances shouldn't require spreadsheet expertise or hours of manual categorization. Financial Graph AI automates the tedious parts of financial tracking while providing intelligent insights about spending patterns that traditional finance apps miss.

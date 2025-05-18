@@ -434,21 +434,27 @@ def create_graph_model(driver: GraphDatabase.driver, transactions: List[Dict], b
         for record in result:
             transactions_created = record["transactions_created"]
         
-        # Create additional relationships based on transaction patterns
-        session.run("""
-            // Create relationships between merchants in the same category
+        # Create relationships between merchants in the same category
+        session.run(
+            """
             MATCH (m1:Merchant)<-[:FROM_MERCHANT]-(t1:Transaction)-[:CATEGORIZED_AS]->(c:Category),
                   (m2:Merchant)<-[:FROM_MERCHANT]-(t2:Transaction)-[:CATEGORIZED_AS]->(c)
             WHERE m1 <> m2 AND t1.batch_id = $batch_id AND t2.batch_id = $batch_id
             MERGE (m1)-[r:SAME_CATEGORY]->(m2)
             SET r.category = c.name
-            
-            // Create time-based sequence relationships between transactions
+            """,
+            batch_id=batch_id
+        )
+        # Create time-based sequence relationships between transactions
+        session.run(
+            """
             MATCH (t1:Transaction), (t2:Transaction)
             WHERE t1.batch_id = $batch_id AND t2.batch_id = $batch_id
                   AND t1.date = t2.date AND id(t1) < id(t2)
             MERGE (t1)-[:SAME_DAY]->(t2)
-        """, batch_id=batch_id)
+            """,
+            batch_id=batch_id
+        )
         
         # Query to get counts of created nodes and relationships
         result = session.run("""
